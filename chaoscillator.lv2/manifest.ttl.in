@@ -1,2 +1,9 @@
 @prefix lv2:  <http://lv2plug.in/ns/lv2core#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<https://augeas.github.io/chaoscillator-lv2/lorenz>
+        a lv2:Plugin ;
+        lv2:binary <lorenz@LIB_EXT@> ;
+        rdfs:seeAlso <lorenz.ttl> .
+
+
