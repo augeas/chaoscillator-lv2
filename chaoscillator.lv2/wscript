@@ -2,6 +2,10 @@
 from waflib.extras import autowaf as autowaf
 import re
 
+import os
+
+os.environ['CXXFLAGS'] = "-std=c++11"
+
 # Variables for 'waf dist'
 APPNAME = 'chaoscillator.lv2'
 VERSION = '1.0.0'
@@ -66,3 +70,4 @@ def build(bld):
               uselib       = 'M LV2',
               includes     = includes)
     #obj.env.cshlib_PATTERN = module_pat
+    
