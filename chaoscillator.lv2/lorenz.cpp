@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <boost/array.hpp>
 #include <boost/numeric/odeint.hpp>
-#include "lv2/lv2plug.in/ns/lv2core/lv2.h"
+#include <lv2/lv2plug.in/ns/lv2core/lv2.h>
 
 #define LORENZ_URI "https://augeas.github.io/chaoscillator-lv2/lorenz"
 

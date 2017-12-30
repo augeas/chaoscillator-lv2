@@ -5,7 +5,7 @@
 @prefix units: <http://lv2plug.in/ns/extensions/units#> .
 
 <https://augeas.github.io/chaoscillator-lv2/lorenz>
-        a lv2:Plugin ;
+        a lv2:Plugin ,
         lv2:LorenzPlugin ;
         lv2:project <https://augeas.github.io/chaoscillator-lv2> ;
         doap:name "Lorenz Attractor" ;
@@ -38,19 +38,19 @@
             lv2:minimum 1.33333 ;
             lv2:maximum 4.0 ;
         ] , [
-                a lv2:OutputtPort ,
+                a lv2:OutputPort ,
             lv2:ControlPort ;
             lv2:index 3 ;
             lv2:symbol "x" ;
             lv2:name "x" ;
         ] , [
-                a lv2:OutputtPort ,
+                a lv2:OutputPort ,
             lv2:ControlPort ;
             lv2:index 4 ;
             lv2:symbol "y" ;
             lv2:name "y" ;
         ] , [
-                a lv2:OutputtPort ,
+                a lv2:OutputPort ,
             lv2:ControlPort ;
             lv2:index 5 ;
             lv2:symbol "z" ;
