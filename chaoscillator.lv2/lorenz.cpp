@@ -81,34 +81,33 @@ run(LV2_Handle instance, uint32_t n_samples)
     
         Lorenz* lorenz = (Lorenz*)instance;
 
-        const float* const sigma = lorenz->sigma;
-        const float* const rho = lorenz->rho;
-        const float* const beta = lorenz->beta;
+        const float sigma = *(lorenz->sigma);
+        const float rho = *(lorenz->rho);
+        const float beta = *(lorenz->beta);
         
-        float* const x = lorenz->x;
-        float* const y = lorenz->y;
-        float* const z = lorenz->z;
-        
+        float x = *(lorenz->x);
+        float y = *(lorenz->y);
+        float z = *(lorenz->z);
+                
         vec[0] = lorenz->xx;
         vec[1] = lorenz->yy;
         vec[2] = lorenz->zz;
         
         runge_kutta4<state_type> rk4;
         
-        for (uint32_t pos = 0; pos < n_samples; pos++) {
-            rk4.do_step([&sigma, &rho, &beta, &pos] (state_type &v , state_type &dvdt , double t) {
-                dvdt[0] = sigma[pos] * (v[1] - v[0]);
-                dvdt[1] = rho[pos] * v[0] - v[1] - v[0] * v[2];
-                dvdt[2] = v[0]*v[1] - beta[pos] * v[2];
-            }, vec ,0.0 ,0.01);
-            x[pos] = vec[0];
-            y[pos] = vec[1];
-            z[pos] = vec[2];
-        }
+        rk4.do_step([sigma, rho, beta] (state_type &v , state_type &dvdt , double t) {
+            dvdt[0] = sigma * (v[1] - v[0]);
+            dvdt[1] = rho * v[0] - v[1] - v[0] * v[2];
+            dvdt[2] = v[0]*v[1] - beta * v[2];
+        }, vec ,0.0 ,0.01);
         
-        lorenz->xx = vec[0];
-        lorenz->yy = vec[1];
-        lorenz->zz = vec[2];
+        x = vec[0];
+        y = vec[1];
+        z = vec[2];
+        
+        lorenz->xx = x;
+        lorenz->yy = y;
+        lorenz->zz = z;
 }
 
 static void
