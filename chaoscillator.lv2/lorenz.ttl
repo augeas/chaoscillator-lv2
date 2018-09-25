@@ -5,7 +5,7 @@
 @prefix units: <http://lv2plug.in/ns/extensions/units#> .
 
 <https://augeas.github.io/chaoscillator-lv2/lorenz>
-        a lv2:Plugin ;
+        a lv2:Plugin ,
         lv2:LorenzPlugin ;
         lv2:project <https://augeas.github.io/chaoscillator-lv2> ;
         doap:name "Lorenz Attractor" ;

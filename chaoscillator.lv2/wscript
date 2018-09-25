@@ -19,13 +19,13 @@ def configure(conf):
     conf.load('compiler_cxx')
     conf.load('lv2')
     autowaf.configure(conf)
-    autowaf.set_c99_mode(conf)
+    #autowaf.set_c99_mode(conf)
     autowaf.display_header('Chaoscillator Configuration')
 
     if not autowaf.is_child():
         autowaf.check_pkg(conf, 'lv2', uselib_store='LV2')
 
-    #conf.check(features='c cshlib', lib='m', uselib_store='M', mandatory=False)
+    conf.check(features='c cxxshlib', lib='m', uselib_store='M', mandatory=False)
 
     autowaf.display_msg(conf, 'LV2 bundle directory', conf.env.LV2DIR)
     print('')
@@ -34,15 +34,15 @@ def build(bld):
     bundle = 'chaoscillator-lv2'
 
     # Make a pattern for shared objects without the 'lib' prefix
-    #module_pat = re.sub('^lib', '', 
-    #module_ext = module_pat[module_pat.rfind('.'):]
+    module_pat = re.sub('^lib', '', bld.env.cxxshlib_PATTERN)
+    module_ext = module_pat[module_pat.rfind('.'):]
 
     # Build manifest.ttl by substitution (for portable lib extension)
     bld(features     = 'subst',
         source       = 'manifest.ttl.in',
         target       = '%s/%s' % (bundle, 'manifest.ttl'),
-        install_path = '${LV2DIR}/%s' % bundle)
-        #LIB_EXT      = module_ext)
+        install_path = '${LV2DIR}/%s' % bundle,
+        LIB_EXT      = module_ext)
 
     # Copy other data files to build bundle (build/eg-amp.lv2)
     for i in ['lorenz.ttl']:
@@ -58,11 +58,12 @@ def build(bld):
         includes = '../..'
 
     # Build plugin library
-    obj = bld(features     = 'c cshlib',
+    obj = bld(features     = 'cxx cxxshlib',
               source       = 'lorenz.cpp',
               name         = 'lorenz',
               target       = '%s/lorenz' % bundle,
               install_path = '${LV2DIR}/%s' % bundle,
               uselib       = 'M LV2',
               includes     = includes)
+
     #obj.env.cshlib_PATTERN = module_pat
